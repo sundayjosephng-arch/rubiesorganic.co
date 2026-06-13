@@ -3,45 +3,55 @@
 const SUPABASE_URL = 'https://your-supabase-project-url.supabase.co';
 const SUPABASE_ANON_KEY = 'your-actual-supabase-anon-public-key';
 
-const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const createClient = window.supabase?.createClient || window.Supabase?.createClient;
+if (!createClient) {
+  console.error('Supabase JS SDK not found. Ensure the CDN script is loaded before script.js.');
+}
+const supabase = createClient ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
-function handleFormSubmission(event) {
+async function handleFormSubmission(event) {
   event.preventDefault();
-  
-  const clientName = document.getElementById('clientNameInput').value;
-  const clientEmail = document.getElementById('clientEmailInput').value;
-  const productName = document.getElementById('displayProductName').value;
-  const sizeQuantity = document.getElementsByName('Requested Size and Quantity')[0].value;
-  const logisticsInstructions = document.getElementsByName('Logistics Instructions')[0].value;
+  const form = event.target;
 
-  document.getElementById('successUserName').innerText = clientName;
+  const clientName = document.getElementById('clientNameInput').value.trim();
+  const clientEmail = document.getElementById('clientEmailInput').value.trim();
+  const productName = document.getElementById('displayProductName').value.trim();
+  const sizeQuantityInput = document.getElementsByName('Requested Size and Quantity')[0];
+  const logisticsInstructionsInput = document.getElementsByName('Logistics Instructions')[0];
 
-  // 2. Insert payload data directly into your Supabase Database
-  supabase
-    .from('orders')
-    .insert([
-      { 
-        product_name: productName, 
-        client_name: clientName, 
-        client_email: clientEmail, 
-        size_quantity: sizeQuantity, 
-        logistics_instructions: logisticsInstructions 
+  const sizeQuantity = sizeQuantityInput ? sizeQuantityInput.value.trim() : '';
+  const logisticsInstructions = logisticsInstructionsInput ? logisticsInstructionsInput.value.trim() : '';
+
+  document.getElementById('successUserName').innerText = clientName || 'Customer';
+
+  if (!supabase) {
+    alert('Supabase is not initialized. Please add your Supabase keys and load the SDK first.');
+    return;
+  }
+
+  try {
+    const { error } = await supabase.from('orders').insert([
+      {
+        product_name: productName,
+        client_name: clientName,
+        client_email: clientEmail,
+        size_quantity: sizeQuantity,
+        logistics_instructions: logisticsInstructions
       }
-    ])
-    .then(response => {
-      if (response.error) {
-        console.error('Supabase Database Error:', response.error);
-        alert("Operational Delay: Please check your data fields.");
-      } else {
-        // Success! Proceed to show your premium appreciation graphic screen
-        showSuccessScreen();
-        event.target.reset();
-      }
-    })
-    .catch(error => {
-      console.error('Network Error:', error);
-      showSuccessScreen(); // Fallback UI state
-    });
+    ]);
+
+    if (error) {
+      console.error('Supabase Database Error:', error);
+      alert('Operational delay: please confirm your inputs and Supabase configuration.');
+      return;
+    }
+
+    showSuccessScreen();
+    form.reset();
+  } catch (error) {
+    console.error('Network Error:', error);
+    alert('Unable to reach Supabase. Please try again later.');
+  }
 }
 
 function showSuccessScreen() {
