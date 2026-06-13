@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rubies Organic - Pure Coconut Products</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="style.css">
+ </head>
+ <body class="h-full w-full">
+  <div class="min-h-full w-full flex flex-col">
+   <!-- ========== NAVIGATION ========== -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-lg border-b border-[#E8D9BC] shadow-sm font-sans transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative">
+    
+    <!-- LEFT SIDE: NAVIGATIONAL ROUTING TREE -->
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
+      <a href="#" onclick="navigateTo('home'); return false;" class="text-[#192B24] hover:text-[#4F772D] transition-colors relative py-2 group">
+        Home
+        <span class="absolute bottom-0 left-0 w-0 h-px bg-[#4F772D] transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#" onclick="navigateTo('shop'); return false;" class="text-[#192B24] hover:text-[#4F772D] transition-colors relative py-2 group">
+        All Products
+        <span class="absolute bottom-0 left-0 w-0 h-px bg-[#4F772D] transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#" onclick="navigateTo('about'); return false;" class="text-[#192B24] hover:text-[#4F772D] transition-colors relative py-2 group">
+        About Us
+        <span class="absolute bottom-0 left-0 w-0 h-px bg-[#4F772D] transition-all duration-300 group-hover:w-full"></span>
+      </a>
+    </nav>
+
+    <!-- CENTER SIDE: MASTER EDITORIAL BRAND MARK INSIGNIA -->
+    <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center gap-3 cursor-pointer group" onclick="navigateTo('home');">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center p-0.5 relative overflow-hidden transition-transform duration-500 group-hover:rotate-6 shadow-md shadow-black/5" style="background: linear-gradient(135deg, #A8323A 0%, #C9954D 50%, #6B4423 100%);">
+        <img src="rubiesorganic.webp" class="w-full h-full object-cover rounded-[10px]" alt="Rubies Logo">
+      </div>
+      <div class="text-left hidden sm:block">
+        <div class="font-serif text-lg font-bold tracking-tight text-[#192B24] leading-none mb-0.5">Rubies Organic</div>
+        <div class="text-[9px] font-mono tracking-[0.25em] uppercase text-[#4F772D] font-bold">Nigeria</div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE: ACCOUNT INTEGRATION & MOBILE TOGGLE SYSTEM -->
+    <div class="flex items-center gap-4 ml-auto md:ml-0">
+      <a href="#" onclick="navigateTo('contact'); return false;" class="hidden md:inline-flex text-xs font-mono tracking-widest uppercase font-bold text-[#4A5D4E] hover:text-[#4F772D] transition-colors py-2">
+        // Contact Hub
+      </a>
+      
+      <a href="#" onclick="navigateTo('register'); return false;" class="bg-[#344E41] hover:bg-[#233B31] text-white text-xs font-mono uppercase tracking-widest font-bold px-5 py-3 rounded-xl shadow-sm transition duration-300 transform hover:-translate-y-0.5">
+        Register
+      </a>
+
+      <!-- Minimal Architect Hamburger Trigger (Mobile Only) -->
+      <button id="mobile-nav-trigger" class="md:hidden p-2 text-[#192B24] hover:text-[#4F772D] focus:outline-none transition-colors" aria-label="Toggle Menu">
+        <svg id="hamburger-icon" class="w-6 h-6 stroke-current transition-transform duration-300" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- OFF-CANVAS SLIDEOUT DOCK ARCHITECTURE (MOBILE RESPONSIVE SYSTEM) -->
+  <div id="mobile-nav-panel" class="fixed inset-x-0 top-20 bg-white border-b border-[#E8D9BC] shadow-xl opacity-0 translate-y-[-10px] pointer-events-none transition-all duration-300 z-30 md:hidden">
+    <nav class="flex flex-col p-6 space-y-4 bg-[#FAF8F5]">
+      <a href="#" onclick="toggleMobileMenu(); navigateTo('home'); return false;" class="font-serif text-lg font-medium text-[#192B24] hover:text-[#4F772D] transition-colors py-2 border-b border-[#1E2D24]/5">Home</a>
+      <a href="#" onclick="toggleMobileMenu(); navigateTo('shop'); return false;" class="font-serif text-lg font-medium text-[#192B24] hover:text-[#4F772D] transition-colors py-2 border-b border-[#1E2D24]/5">All Products</a>
+      <a href="#" onclick="toggleMobileMenu(); navigateTo('about'); return false;" class="font-serif text-lg font-medium text-[#192B24] hover:text-[#4F772D] transition-colors py-2 border-b border-[#1E2D24]/5">About Us</a>
+      <a href="#" onclick="toggleMobileMenu(); navigateTo('contact'); return false;" class="font-serif text-lg font-medium text-[#192B24] hover:text-[#4F772D] transition-colors py-2">Contact Hub</a>
+    </nav>
+  </div>
+</header>
+
+<!-- INTERACTIVE NAVIGATION CONTROLLER ACTIONS -->
+<script>
+  const mobileTrigger = document.getElementById('mobile-nav-trigger');
+  const mobilePanel = document.getElementById('mobile-nav-panel');
+  const hamburgerIcon = document.getElementById('hamburger-icon');
+
+  function toggleMobileMenu() {
+    const isOpened = mobilePanel.classList.contains('opacity-100');
+    
+    if (isOpened) {
+      // Close Transitions
+      mobilePanel.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+      mobilePanel.classList.add('opacity-0', 'translate-y-[-10px]', 'pointer-events-none');
+      hamburgerIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>`;
+    } else {
+      // Open Transitions
+      mobilePanel.classList.remove('opacity-0', 'translate-y-[-10px]', 'pointer-events-none');
+      mobilePanel.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+      hamburgerIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>`;
+    }
+  }
+
+  mobileTrigger.addEventListener('click', toggleMobileMenu);
+
+  // Structural Scroll Elevation Accentuation
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (window.scrollY > 20) {
+      header.classList.add('shadow-md', 'bg-white/95');
+    } else {
+      header.classList.remove('shadow-md', 'bg-white/95');
+    }
+  });
+</script>
+   <main class="flex-1 w-full">
+    <!-- ========== HOME PAGE ========== -->
+    <section id="page-home" class="page active bg-[#F4F1EA] text-[#1E2D24] overflow-x-hidden">
+  
+  <!-- HERO SECTION: ASYMMETRIC MINIMALIST SPLIT -->
+  <div class="relative min-h-[90vh] flex flex-col justify-center py-12 md:py-20 border-b border-[#1E2D24]/10">
+    <!-- Huge background watermarked text for a high-fashion editorial feel -->
+    <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 text-[15vw] font-serif font-black text-[#1E2D24]/[0.02] select-none uppercase tracking-tighter text-center pointer-events-none">
+      Pure Wellness
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+      
+      <!-- LEFT COLUMN: The Editorial Text (Lg: spans 5 cols) -->
+      <div class="lg:col-span-5 flex flex-col justify-center">
+        <div class="inline-flex items-center gap-4 text-xs font-mono uppercase tracking-[0.3em] text-[#76532B] mb-8">
+          <span>[100% Organic]</span>
+          <span class="w-1 h-1 bg-[#76532B] rounded-full"></span>
+          <span>[Proudly Made in Nigeria.]</span>
+        </div>
+        
+        <h1 id="hero-title" class="font-serif text-5xl md:text-7xl font-light leading-[1.1] tracking-tight mb-8">
+          Health is <br>
+          <span class="font-normal italic text-[#425F4C]">your only</span> <br>
+          true wealth.
+        </h1>
+        
+        <p id="hero-subtitle" class="text-base text-[#1E2D24]/80 max-w-sm mb-8 leading-relaxed font-sans">
+          Welcome to Rubies Organic. We formulate raw, uncompromised, natural foods. No shortcuts, no artificial additions. Just the raw intelligence of nature packaged for your everyday vitality.
+        </p>
+
+        <!-- Minimalist, Sleek Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          <button onclick="navigateTo('shop')" class="group bg-[#1E2D24] text-[#F4F1EA] px-8 py-4 font-mono uppercase text-xs tracking-widest flex items-center justify-between gap-4 hover:bg-[#425F4C] transition-all duration-300">
+            <span>Shop Collection</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"></i>
+          </button>
+          <button onclick="navigateTo('about')" class="border border-[#1E2D24] px-8 py-4 font-mono uppercase text-xs tracking-widest hover:bg-[#1E2D24] hover:text-[#F4F1EA] transition-all duration-300">
+            Our Legacy
+          </button>
+        </div>
+
+        <!-- Subtle Stats - Stacked Vertically Like a Magazine Index -->
+        <div class="mt-16 pt-8 border-t border-[#1E2D24]/10 grid grid-cols-3 gap-4 font-mono">
+          <div>
+            <div class="text-xs text-[#1E2D24]/50">[ 01 ]</div>
+            <div class="text-xl font-serif font-bold text-[#425F4C]">100%</div>
+            <div class="text-[10px] uppercase tracking-wider text-[#1E2D24]/60">Pure Ingredients</div>
+          </div>
+          <div>
+            <div class="text-xs text-[#1E2D24]/50">[ 02 ]</div>
+            <div class="text-xl font-serif font-bold text-[#425F4C]">08+</div>
+            <div class="text-[10px] uppercase tracking-wider text-[#1E2D24]/60">Curated Goods</div>
+          </div>
+          <div>
+            <div class="text-xs text-[#1E2D24]/50">[ 03 ]</div>
+            <div class="text-xl font-serif font-bold text-[#425F4C]">05K</div>
+            <div class="text-[10px] uppercase tracking-wider text-[#1E2D24]/60">Nourished Lives</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: The Asymmetric Image Layering (Lg: spans 7 cols) -->
+      <div class="lg:col-span-7 relative flex items-center justify-center pt-12 lg:pt-0">
+        <!-- Main Image Canvas simulating an art exhibition frame -->
+        <div class="relative w-full max-w-[460px] aspect-[3/4] bg-[#E5DFD3] p-4 border border-[#1E2D24]/10 shadow-sm group">
+          <img src="backgroundimg.png" alt="Rubies Organic Editorial Art" class="w-full h-full object-cover grayscale-[20%] contrast-[105%] group-hover:grayscale-0 transition-all duration-500">
+          
+          <!-- Abstract Floating Organic SVG (Overlaying the frame natively) -->
+          <div class="absolute -bottom-10 -left-12 w-[220px] h-[220px] hidden sm:block pointer-events-none drop-shadow-md">
+            <svg class="w-full h-full" viewBox="0 0 400 400">
+              <g transform="rotate(-15 200 200)">
+                <!-- Coconut Art Silhouette minimized for clean modern vibes -->
+                <ellipse cx="200" cy="220" rx="100" ry="110" fill="#1E2D24" />
+                <ellipse cx="200" cy="215" rx="90" ry="100" fill="#FAF8F5" />
+                <ellipse cx="200" cy="215" rx="80" ry="20" fill="#76532B" opacity="0.15" />
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Floating Text Tag Badge overlapping the imagery -->
+        <div class="absolute top-4 right-4 sm:right-0 bg-[#425F4C] text-[#F4F1EA] p-6 max-w-[200px] font-serif italic text-sm shadow-xl tracking-wide leading-relaxed transform rotate-3">
+          "Explore pure coconut oils, high-fiber garri, and native nut granolas designed for slow, clean living."
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FEATURED PRODUCTS: BOLD MONOCHROMATIC INTRO -->
+  <div class="py-24 bg-[#EAE5DA]">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <!-- Asymmetric Header layout -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16 border-b border-[#1E2D24]/10 pb-8">
+        <div>
+          <span class="text-xs font-mono tracking-widest uppercase text-[#76532B] block mb-2">// THE RADICAL HARVEST</span>
+          <h2 class="font-serif text-4xl md:text-6xl font-light tracking-tight text-[#1E2D24]">
+            Our Natural <span class="italic font-normal">Manifesto</span>
+          </h2>
+        </div>
+        <p class="text-sm text-[#1E2D24]/70 max-w-md font-sans leading-relaxed">
+          Rubies Organic is a rejection of heavily processed modern foods. We sustainably handcraft cold-pressed rubies organic oils, rich grain granolas, and pure coconut products sourced natively from local Nigerian farms.
+        </p>
+      </div>
+
+      <!-- Products Grid Wrapper (Hooks into your system injection) -->
+      <div id="featured-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+      
+      <!-- Minimalist Central Action Button -->
+      <div class="text-center mt-20">
+        <button onclick="navigateTo('shop')" class="inline-flex items-center gap-8 font-mono text-xs uppercase tracking-[0.4em] text-[#1E2D24] hover:text-[#425F4C] transition-colors group">
+          <span>View Entire Catalogue</span>
+          <span class="w-12 h-px bg-[#1E2D24] group-hover:w-20 transition-all duration-300"></span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- VALUE PROPOSITION: BOLD MINIMAL ZONES -->
+  <div class="bg-[#1E2D24] text-[#FAF8F5] py-28 relative">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
+        <div class="lg:col-span-4">
+          <span class="text-xs font-mono tracking-widest uppercase text-[#FAF8F5]/40 block mb-2">[ INTENTIONAL SOURCING ]</span>
+          <h2 class="font-serif text-3xl md:text-4xl font-light tracking-tight">
+            We don't manufacture. <br><span class="italic font-normal text-[#FAF8F5]/60">We curate nature.</span>
+          </h2>
+        </div>
+        <div class="lg:col-span-8 h-px bg-[#FAF8F5]/10 my-auto hidden lg:block"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-[#FAF8F5]/10">
+        <!-- Benefit Block 1 -->
+        <div class="p-8 md:p-12 border-b border-r border-[#FAF8F5]/10 group hover:bg-[#FAF8F5]/[0.02] transition">
+          <div class="font-mono text-xs text-[#FAF8F5]/40 mb-10">01 / INTEGRITY</div>
+          <h3 class="font-serif text-2xl mb-4 font-normal">100% Raw Organic</h3>
+          <p class="text-sm text-[#FAF8F5]/60 leading-relaxed font-sans">Absolutely zero chemical preservatives, bleaching agents, or synthetic additives. Only food in its rawest, honest state.</p>
+        </div>
+        
+        <!-- Benefit Block 2 -->
+        <div class="p-8 md:p-12 border-b border-r border-[#FAF8F5]/10 group hover:bg-[#FAF8F5]/[0.02] transition">
+          <div class="font-mono text-xs text-[#FAF8F5]/40 mb-10">02 / TRADITION</div>
+          <h3 class="font-serif text-2xl mb-4 font-normal">Cold-Pressed Vitality</h3>
+          <p class="text-sm text-[#FAF8F5]/60 leading-relaxed font-sans">Using slow, heat-free traditional methods that preserve natural flavors and essential fatty acids fully intact.</p>
+        </div>
+        
+        <!-- Benefit Block 3 -->
+        <div class="p-8 md:p-12 border-b border-r border-[#FAF8F5]/10 group hover:bg-[#FAF8F5]/[0.02] transition">
+          <div class="font-mono text-xs text-[#FAF8F5]/40 mb-10">03 / ECOSYSTEM</div>
+          <h3 class="font-serif text-2xl mb-4 font-normal">Locally Rooted</h3>
+          <p class="text-sm text-[#FAF8F5]/60 leading-relaxed font-sans">Sourced proudly from independent Nigerian agriculture partnerships, supporting ethical wages and sustainable farms.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+    <!-- ========== SHOP PAGE ========== -->
+   <!-- MAIN CONTEXT SECTION -->
+<section id="page-shop" class="page bg-[#F4F1EA] text-[#1E2D24] min-h-screen py-16 md:py-24 overflow-x-hidden relative">
+  <div class="max-w-7xl mx-auto px-6">
+    
+    <!-- EDITORIAL SHOP HEADER -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-20 border-b border-[#1E2D24]/10 pb-10">
+      <div class="max-w-xl">
+        <div class="text-xs font-mono tracking-[0.3em] uppercase text-[#76532B] mb-3">
+          // Rubies Organic Shop Page
+        </div>
+        <h1 class="font-serif text-4xl md:text-6xl font-light tracking-tight text-[#1E2D24]">
+          Rubies Organic <br><span class="italic font-normal text-[#425F4C]">Main Collection</span>
+        </h1>
+      </div>
+      <p class="text-sm text-[#1E2D24]/70 max-w-md font-sans leading-relaxed">
+        Explore our premium range of organic wellness products—carefully crafted for absolute purity, freshness, and uncompromised quality. From farm to shelf, every single choice supports your vitality.
+      </p>
+    </div>
+
+    <!-- MAIN INTERACTIVE CATEGORIES SYSTEM -->
+    <div class="max-w-7xl mx-auto mb-16">
+      <div class="flex items-center gap-4 mb-8 font-mono text-xs uppercase tracking-wider text-[#1E2D24]/60">
+        <span>[ Select a Product to Purchase ]</span>
+        <div class="flex-1 h-px bg-[#1E2D24]/10"></div>
+      </div>
+      
+      <!-- Asymmetric Premium Card Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <!-- Product 1: Coconut Oil -->
+        <div class="group bg-[#FAF8F5] border border-[#1E2D24]/10 p-5 flex flex-col justify-between transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
+          <div>
+            <div class="relative aspect-square overflow-hidden bg-[#E5DFD3] mb-6">
+              <img src="coconut picture.jpg" alt="Rubies Organic Coconut Oil" class="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
+              <div class="absolute inset-0 bg-[#1E2D24]/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </div>
+            <div class="flex flex-col mb-2">
+              <h3 class="font-serif text-xl font-normal text-[#1E2D24] group-hover:text-[#425F4C] transition-colors mb-1">
+                Rubies Organic <br><span class="italic font-light">Coconut Oil</span>
+              </h3>
+              <span class="font-mono text-[10px] tracking-wider uppercase text-[#76532B]">Tiered Pricing by Volume</span>
+            </div>
+            <p class="text-xs text-[#1E2D24]/60 font-sans mb-4">Cold-pressed pure oil optimal for system balance and skin restoration. Value scales fluidly across our available 100ml, 250ml, 500ml, and 1-Litre premium provisions.</p>
+            <ul class="space-y-1.5 text-xs text-[#1E2D24]/70 font-sans border-t border-[#1E2D24]/10 pt-4">
+              <li class="flex items-center gap-2">✔ Rich in healthy fats</li>
+              <li class="flex items-center gap-2">✔ Supports heart health</li>
+              <li class="flex items-center gap-2">✔ Cooking & skincare versatile</li>
+            </ul>
+          </div>
+          <button onclick="openOrderModal('Rubies Organic Coconut Oil', '100ml, 250ml, 500ml, 1-Litre')" class="mt-8 w-full py-3 bg-[#1E2D24] hover:bg-[#425F4C] text-[#FAF8F5] font-mono text-[11px] uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2">
+            <span>Order Product</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </button>
+        </div>
+
+        <!-- Product 2: Coconut Gari -->
+        <div class="group bg-[#FAF8F5] border border-[#1E2D24]/10 p-5 flex flex-col justify-between transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
+          <div>
+            <div class="relative aspect-square overflow-hidden bg-[#E5DFD3] mb-6">
+              <img src="newcoconut gari brand.jpg" alt="Rubies Organic Coconut Gari" class="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
+              <div class="absolute inset-0 bg-[#1E2D24]/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </div>
+            <div class="flex flex-col mb-2">
+              <h3 class="font-serif text-xl font-normal text-[#1E2D24] group-hover:text-[#425F4C] transition-colors mb-1">
+                Rubies Organic <br><span class="italic font-light">Coconut Gari</span>
+              </h3>
+              <span class="font-mono text-[10px] tracking-wider uppercase text-[#76532B]">Tiered Pricing by Weight</span>
+            </div>
+            <p class="text-xs text-[#1E2D24]/60 font-sans mb-4">Crisp, premium quality traditional blend refined with authentic coconut shavings. Curated pricing scaled across our signature 100g and 1kg options.</p>
+            <ul class="space-y-1.5 text-xs text-[#1E2D24]/70 font-sans border-t border-[#1E2D24]/10 pt-4">
+              <li class="flex items-center gap-2">✔ Nutrient-rich classic twist</li>
+              <li class="flex items-center gap-2">✔ High fiber content</li>
+              <li class="flex items-center gap-2">✔ Naturally gluten-free</li>
+            </ul>
+          </div>
+          <button onclick="openOrderModal('Rubies Organic Coconut Gari', '100g, 1kg')" class="mt-8 w-full py-3 bg-[#1E2D24] hover:bg-[#425F4C] text-[#FAF8F5] font-mono text-[11px] uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2">
+            <span>Order Product</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </button>
+        </div>
+
+        <!-- Product 3: Granola -->
+        <div class="group bg-[#FAF8F5] border border-[#1E2D24]/10 p-5 flex flex-col justify-between transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
+          <div>
+            <div class="relative aspect-square overflow-hidden bg-[#E5DFD3] mb-6">
+              <img src="granula.jpg" alt="Rubies Edibles Granola" class="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
+              <div class="absolute inset-0 bg-[#1E2D24]/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </div>
+            <div class="flex flex-col mb-2">
+              <h3 class="font-serif text-xl font-normal text-[#1E2D24] group-hover:text-[#425F4C] transition-colors mb-1">
+                Rubies Edibles <br><span class="italic font-light">Granola Snacks</span>
+              </h3>
+              <span class="font-mono text-[10px] tracking-wider uppercase text-[#76532B]">Tiered Pricing by Volume</span>
+            </div>
+            <p class="text-xs text-[#1E2D24]/60 font-sans mb-4">Artisanal crunch packets infused with dense plant proteins and natural sweeteners. Scaled dimensions match your pantry scale requirements.</p>
+            <ul class="space-y-1.5 text-xs text-[#1E2D24]/70 font-sans border-t border-[#1E2D24]/10 pt-4">
+              <li class="flex items-center gap-2">✔ Whole grains, nuts, & seeds</li>
+              <li class="flex items-center gap-2">✔ High protein breakfast</li>
+              <li class="flex items-center gap-2">✔ Low glycemic clean sweetener</li>
+            </ul>
+          </div>
+          <button onclick="openOrderModal('Rubies Edibles Granola Snacks', 'Custom Sizing')" class="mt-8 w-full py-3 bg-[#1E2D24] hover:bg-[#425F4C] text-[#FAF8F5] font-mono text-[11px] uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2">
+            <span>Order Product</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </button>
+        </div>
+
+        <!-- Product 4: Coconut Water -->
+        <div class="group bg-[#FAF8F5] border border-[#1E2D24]/10 p-5 flex flex-col justify-between transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
+          <div>
+            <div class="relative aspect-square overflow-hidden bg-[#E5DFD3] mb-6">
+              <img src="freshcoconutwaterbottles.png" alt="Rubies Organic Coconut Water" class="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
+              <div class="absolute inset-0 bg-[#1E2D24]/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </div>
+            <div class="flex flex-col mb-2">
+              <h3 class="font-serif text-xl font-normal text-[#1E2D24] group-hover:text-[#425F4C] transition-colors mb-1">
+                Rubies Organic <br><span class="italic font-light">Coconut Water</span>
+              </h3>
+              <span class="font-mono text-[10px] tracking-wider uppercase text-[#76532B]">Tiered Pricing by Volume</span>
+            </div>
+            <p class="text-xs text-[#1E2D24]/60 font-sans mb-4">Raw electrolyte water packed directly at source. Carefully configured and priced exclusively within our premium 300ml single-serve design.</p>
+            <ul class="space-y-1.5 text-xs text-[#1E2D24]/70 font-sans border-t border-[#1E2D24]/10 pt-4">
+              <li class="flex items-center gap-2">✔ Pure enzymatic hydration</li>
+              <li class="flex items-center gap-2">✔ Fat & cholesterol free</li>
+              <li class="flex items-center gap-2">✔ Rich in essential potassium</li>
+            </ul>
+          </div>
+          <button onclick="openOrderModal('Rubies Organic Coconut Water', '300ml')" class="mt-8 w-full py-3 bg-[#1E2D24] hover:bg-[#425F4C] text-[#FAF8F5] font-mono text-[11px] uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2">
+            <span>Order Product</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DYNAMIC INJECTION TARGET FOR PRODUCT ITEMS -->
+    <div class="mt-20 border-t border-[#1E2D24]/10 pt-16">
+      <div id="shop-products-grid" class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <!-- JavaScript items injection point -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INTERACTIVE ORDER OVERLAY SYSTEM (MODAL PAGE) -->
+  <div id="orderOverlay" class="fixed inset-0 bg-[#1E2D24]/40 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-500 px-4">
+    <div class="bg-[#FAF8F5] border border-[#1E2D24]/15 max-w-lg w-full p-8 md:p-10 shadow-2xl relative transition-transform duration-500 scale-95 transform">
+      
+      <!-- Close Button -->
+      <button onclick="closeOrderModal()" class="absolute top-6 right-6 text-[#1E2D24]/60 hover:text-[#1E2D24] font-mono text-xs tracking-widest uppercase flex items-center gap-1 transition-colors">
+        ✕ close
+      </button>
+
+      <!-- VIEW 1: INTERACTIVE FORM -->
+      <div id="modalFormContent">
+        <div class="text-xs font-mono tracking-widest uppercase text-[#76532B] mb-2">// Secure Order Desk</div>
+        <h2 class="font-serif text-2xl text-[#1E2D24] mb-6">Complete Your Request</h2>
+        
+        <!-- Action target routes directly to your company mail endpoint -->
+        <form id="organicPurchaseForm" action="https://formspree.io/f/rubiesorganic@gmail.com" method="POST" onsubmit="handleFormSubmission(event)" class="space-y-5">
+          
+          <!-- Hidden inputs ensuring Formspree hooks auto-responses back to user -->
+          <input type="hidden" name="_subject" value="New Premium Order Received via Rubies Organic Portal">
+          
+          <!-- Selected product data -->
+          <div class="bg-[#F4F1EA] p-4 border border-[#1E2D24]/10 rounded-sm">
+            <span class="block text-[10px] font-mono uppercase text-[#76532B]">Selected Item</span>
+            <input type="text" id="displayProductName" name="Requested Product" readonly class="bg-transparent font-serif text-lg text-[#425F4C] font-normal border-none outline-none w-full p-0 pointer-events-none mt-0.5">
+            <div id="availableSizesIndicator" class="text-sans text-[11px] text-[#1E2D24]/60 mt-1 italic"></div>
+          </div>
+
+          <!-- User context metrics -->
+          <div>
+            <label class="block text-[10px] font-mono uppercase tracking-wider text-[#1E2D24]/70 mb-1.5">Your Full Name *</label>
+            <input type="text" id="clientNameInput" name="Client Name" required class="w-full bg-white border border-[#1E2D24]/10 px-4 py-3 text-sm text-[#1E2D24] focus:outline-none focus:border-[#425F4C] font-sans transition-colors">
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-mono uppercase tracking-wider text-[#1E2D24]/70 mb-1.5">Email Address (For Instant Auto-Receipt) *</label>
+            <!-- Important: 'email' field triggers the system auto-replies directly back to user -->
+            <input type="email" id="clientEmailInput" name="email" required class="w-full bg-white border border-[#1E2D24]/10 px-4 py-3 text-sm text-[#1E2D24] focus:outline-none focus:border-[#425F4C] font-sans transition-colors">
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-mono uppercase tracking-wider text-[#1E2D24]/70 mb-1.5">Preferred Sizing & Quantity *</label>
+            <input type="text" name="Requested Size and Quantity" placeholder="e.g., 500ml / 2 Units" required class="w-full bg-white border border-[#1E2D24]/10 px-4 py-3 text-sm text-[#1E2D24] focus:outline-none focus:border-[#425F4C] font-sans transition-colors">
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-mono uppercase tracking-wider text-[#1E2D24]/70 mb-1.5">Delivery Address & Notes</label>
+            <textarea name="Logistics Instructions" rows="2" class="w-full bg-white border border-[#1E2D24]/10 px-4 py-3 text-sm text-[#1E2D24] focus:outline-none focus:border-[#425F4C] font-sans transition-colors resize-none" placeholder="Provide delivery specifics..."></textarea>
+          </div>
+
+          <button type="submit" class="w-full bg-[#1E2D24] hover:bg-[#425F4C] text-[#FAF8F5] py-4 text-xs font-mono uppercase tracking-widest transition-all duration-300 shadow-md">
+            Authorize & Dispatch Request
+          </button>
+        </form>
+      </div>
+
+      <!-- VIEW 2: GRAPHICAL PREMIUM APPRECIATION SCREEN -->
+      <div id="modalSuccessContent" class="hidden text-center py-6">
+        <div class="w-16 h-16 bg-[#425F4C]/10 rounded-full flex items-center justify-center mx-auto mb-6 text-[#425F4C] text-xl">
+          ✓
+        </div>
+        <div class="text-xs font-mono tracking-[0.3em] uppercase text-[#76532B] mb-2">// Dispatch Initiated</div>
+        <h2 class="font-serif text-3xl font-light text-[#1E2D24] tracking-tight mb-4">
+          Thank You for <br><span class="italic font-normal text-[#425F4C]">Choosing Rubies Organic</span>
+        </h2>
+        <div class="h-px bg-[#1E2D24]/10 w-24 mx-auto my-6"></div>
+        
+        <p class="text-sm text-[#1E2D24]/70 font-sans max-w-sm mx-auto leading-relaxed mb-4">
+          Greetings <span id="successUserName" class="font-semibold text-[#1E2D24]">Valued Customer</span>, your configuration request has been directly captured at <span class="font-semibold text-[#1E2D24]">rubiesorganic@gmail.com</span>.
+        </p>
+        
+        <!-- High-end graphic status alert card -->
+        <div class="bg-[#425F4C]/5 border border-[#425F4C]/15 rounded p-4 text-left font-sans text-xs text-[#1E2D24]/80 space-y-2 max-w-sm mx-auto mb-6">
+          <p class="font-mono text-[10px] uppercase text-[#76532B] tracking-wider">// Logistics Update</p>
+          <p>Your order process and allocation verification are already underway. An automated transactional receipt along with comprehensive shipping manifests has been instantly dispatched to your personal inbox.</p>
+          <p class="italic pt-1">We profoundly appreciate your patronage and commitment to uncompromised natural vitality.</p>
+        </div>
+
+        <button onclick="closeOrderModal()" class="px-8 py-3 border border-[#1E2D24]/20 hover:bg-[#1E2D24] hover:text-[#FAF8F5] transition-all duration-300 text-xs font-mono uppercase tracking-widest">
+          Return to Market
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMPLEMENTARY INTERACTIVE HANDLING SCRIPT -->
+<script src="shop.js"></script>
+    <!-- ========== ABOUT PAGE ========== -->
+    <section id="page-about" class="page bg-[#FAF8F5] text-[#2C3E2B] font-sans overflow-x-hidden">
+  
+  <!-- PREMIUM EDITORIAL HERO -->
+  <div class="relative bg-gradient-to-br from-[#2D4A3E] via-[#233B31] to-[#192B24] py-24 md:py-36 overflow-hidden">
+    <!-- Subtle architectural alignment lattice -->
+    <div class="absolute inset-0 opacity-5 mix-blend-overlay pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]"></div>
+    
+    <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+      <div class="text-xs tracking-[0.4em] uppercase text-[#E9D8A6] font-mono font-semibold mb-4 block">
+        // The Lineage of Purity
+      </div>
+      <h1 id="about-heading" class="font-serif text-4xl md:text-7xl font-light text-white leading-tight mb-8 tracking-tight">
+        Rooted in Nature. <br>
+        <span class="italic font-normal text-[#E9D8A6]"> Proundly Made in Nigeria.</span>
+      </h1>
+      <p id="about-text" class="text-white/80 text-base md:text-xl max-w-3xl mx-auto leading-relaxed font-sans font-light">
+     Rubies Organic is more than an agro-wellness brand—it is a promise we live by every day. For us, true wellness starts at the root. We are deeply committed to ensuring that every raw, botanical blend we create retains the pure, natural potency of our harvest. Infused with the warmth of the West African sun and crafted with pride by local family farmers, our products bring the heart of our land straight to your self-care ritual.
+      </p>
+    </div>
+
+    <!-- Architectural Background Curvatures -->
+    <div class="absolute -bottom-12 -left-12 w-64 h-64 rounded-full bg-[#4F772D]/20 blur-3xl pointer-events-none"></div>
+    <div class="absolute -top-12 -right-12 w-64 h-64 rounded-full bg-[#E9D8A6]/10 blur-3xl pointer-events-none"></div>
+  </div>
+
+  <!-- ASYMMETRIC STORY AND BRAND PROFILE SECTION -->
+  <div class="py-24 bg-[#FAF8F5]">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-16 items-center">
+      
+      <!-- Left Column: Premium Framed Visual Assets -->
+      <div class="lg:col-span-5 relative">
+        <div class="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl bg-[#E5DFD3] group z-10 border border-[#1E2D24]/10">
+          <img src="rubiesorganic.webp" alt="The Rubies Organic Botanical Estate" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#192B24]/40 to-transparent"></div>
+        </div>
+        
+        <!-- Interactive Geometric Accent Badge (Replacing old broken markup) -->
+        <div class="absolute -bottom-8 -right-8 w-44 h-44 bg-[#233B31] rounded-2xl p-6 shadow-xl text-white flex flex-col justify-between hidden sm:flex border border-white/10 z-20">
+          <svg class="w-8 h-8 text-[#E9D8A6]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <div class="text-[10px] font-mono uppercase tracking-widest text-[#E9D8A6] mb-1">Standard</div>
+            <div class="text-sm font-serif italic">100% Raw Unpasteurized</div>
+          </div>
+        </div>
+        
+        <!-- Structural Decorative Backdrop Plate -->
+        <div class="absolute top-12 -left-12 w-full h-full bg-[#344E41]/5 rounded-2xl -z-10 border border-[#344E41]/10 pointer-events-none"></div>
+      </div>
+
+      <!-- Right Column: Narrative Copy & Dynamic Statistics Grid -->
+      <div class="lg:col-span-7 space-y-8">
+        <div class="space-y-4">
+          <div class="text-xs font-mono uppercase tracking-wider text-[#3D6917] font-bold">[Rubies Organic Infrastructure ]</div>
+          <h2 class="font-serif text-3xl md:text-5xl font-bold text-[#192B24] tracking-tight leading-tight">
+            From Fresh Raw Coconut <br> To Refined, Nutrient-Rich Wellness Products.
+          </h2>
+        </div>
+        
+        <div class="space-y-6 text-sm md:text-base text-[#4A5D4E] font-sans leading-relaxed">
+          <p>
+            Rubies Organic is a premium Nigeria-based wellness house rooted in a singular, pure intention. Beginning inside a modest family kitchen with a lone hand-selected coconut, we have gracefully grown into a certified, highly trusted source of uncompromised, naturally processed lifestyle foods.
+          </p>
+          <p>
+            By establishing deep, sustainable, direct-trade partnerships with independent smallholder farmers across the country, we guarantee immaculate flavor authenticity, total transparency, and continuous nutrient freshness. Our signature micro-filtered, cold-pressed coconut extractions stand out as the gold standard of natural purity.
+          </p>
+          <p class="italic text-[#192B24] font-serif border-l-2 border-[#E9D8A6] pl-4 font-medium">
+            "We believe Mother Nature arrived at perfection on day one. Our culinary blueprint is simply to protect that composition and stay out of the way."
+          </p>
+        </div>
+
+        <!-- RE-ENGINEERED DYNAMIC TIMELINE STATS CARDS (With Premium Accent Icons) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+          
+          <div class="p-6 rounded-xl bg-white border border-[#1E2D24]/10 shadow-sm hover:shadow-md transition duration-300 relative overflow-hidden group">
+            <div class="absolute top-4 right-4 text-[#344E41]/15 group-hover:text-[#344E41]/30 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div class="font-serif text-3xl font-bold text-[#344E41] mb-1">2013</div>
+            <div class="text-[11px] text-[#4F772D] uppercase tracking-wider font-mono font-bold mb-2">Our Genesis</div>
+            <p class="text-xs text-[#4A5D4E]/80 leading-snug">Founded with a single kitchen experiment focused on raw alternative wellness.</p>
+          </div>
+
+          <div class="p-6 rounded-xl bg-white border border-[#1E2D24]/10 shadow-sm hover:shadow-md transition duration-300 relative overflow-hidden group">
+            <div class="absolute top-4 right-4 text-[#344E41]/15 group-hover:text-[#344E41]/30 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <div class="font-serif text-3xl font-bold text-[#344E41] mb-1">25+</div>
+            <div class="text-[11px] text-[#4F772D] uppercase tracking-wider font-mono font-bold mb-2">Family Farms</div>
+            <p class="text-xs text-[#4A5D4E]/80 leading-snug">Working side-by-side with indigenous growers under fair, direct-trade wages.</p>
+          </div>
+
+          <div class="p-6 rounded-xl bg-white border border-[#1E2D24]/10 shadow-sm hover:shadow-md transition duration-300 relative overflow-hidden group">
+            <div class="absolute top-4 right-4 text-[#344E41]/15 group-hover:text-[#344E41]/30 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+            </div>
+            <div class="font-serif text-3xl font-bold text-[#344E41] mb-1">6K+</div>
+            <div class="text-[11px] text-[#4F772D] uppercase tracking-wider font-mono font-bold mb-2">Pure Devotees</div>
+            <p class="text-xs text-[#4A5D4E]/80 leading-snug">Health-conscious families across West Africa relying on our absolute purity.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- THE THREE CORE VALUES OF DISTINCTION -->
+  <div class="bg-[#233B31] py-24 relative overflow-hidden text-white border-t border-white/5">
+    <div class="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16 max-w-xl mx-auto">
+        <div class="text-xs tracking-[0.3em] uppercase text-[#E9D8A6] font-mono font-semibold mb-3">
+          // Pillars of Operation
+        </div>
+        <h2 class="font-serif text-3xl md:text-5xl font-normal text-white">
+          Our Unwavering <span class="italic text-[#E9D8A6] font-sans">Core Values</span>
+        </h2>
+        <div class="w-12 h-px bg-[#E9D8A6]/40 mx-auto mt-6"></div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        
+        <!-- Value Item 1: Sustainability -->
+        <div class="p-8 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-md hover:border-white/20 transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-xl bg-[#E9D8A6]/10 flex items-center justify-center mb-6 group-hover:bg-[#E9D8A6]/20 transition-colors">
+            <!-- Inline Sprout Icon -->
+            <svg class="w-6 h-6 text-[#E9D8A6]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M3 12h18M5 19.5A2.5 2.5 0 017.5 17H12M19 4.5A2.5 2.5 0 0016.5 7H12m0 0a4 4 0 00-4 4v2m4-6a4 4 0 014 4v2"/>
+            </svg>
+          </div>
+          <h3 class="font-sans font-bold text-white text-xl mb-3 tracking-tight">Eco-Sustainability</h3>
+          <p class="text-white/70 text-sm leading-relaxed font-light">
+            We are committed to environmentally responsible practices, from sourcing to packaging. 
+            Our operations prioritize renewable resources and minimal ecological impact.
+          </p>
+        </div>
+
+        <!-- Value Item 2: Quality -->
+        <div class="p-8 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-md hover:border-white/20 transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-xl bg-[#E9D8A6]/10 flex items-center justify-center mb-6 group-hover:bg-[#E9D8A6]/20 transition-colors">
+            <!-- Inline Quality/Award Badge Icon -->
+            <svg class="w-6 h-6 text-[#E9D8A6]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+            </svg>
+          </div>
+          <h3 class="font-sans font-bold text-white text-xl mb-3 tracking-tight">Immaculate Quality</h3>
+          <p class="text-white/70 text-sm leading-relaxed font-light">
+            Our commitment to excellence is reflected in every product.
+             We source only the finest ingredients and subject them to rigorous quality control standards.
+          </p>
+        </div>
+
+        <!-- Value Item 3: Community -->
+        <div class="p-8 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-md hover:border-white/20 transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-xl bg-[#E9D8A6]/10 flex items-center justify-center mb-6 group-hover:bg-[#E9D8A6]/20 transition-colors">
+            <!-- Inline Multi-User Community Icon -->
+            <svg class="w-6 h-6 text-[#E9D8A6]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-sans font-bold text-white text-xl mb-3 tracking-tight">Sovereign Community</h3>
+          <p class="text-white/70 text-sm leading-relaxed font-light">
+            We are proud to be part of a thriving community of like-minded individuals who share our values and passion for sustainability.  
+          </p>
+        </div>
+        
+      </div>  
+    </div>
+  </div>
+</section>
+    <!-- ========== CONTACT PAGE ========== -->
+   <section id="page-contact" class="page bg-[#FAF8F5] text-[#2C3E2B] font-sans py-16 md:py-28 overflow-x-hidden relative">
+  
+  <!-- Architectural Backdrop Accent Lines -->
+  <div class="absolute inset-0 opacity-5 mix-blend-overlay pointer-events-none bg-[radial-gradient(#1e2d24_1px,transparent_1px)] [background-size:20px_20px]"></div>
+
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    
+    <!-- EDITORIAL SECTION HEADER -->
+    <div class="text-center max-w-2xl mx-auto mb-16 md:mb-24">
+      <div class="text-xs tracking-[0.35em] uppercase text-[#4F772D] font-mono font-bold mb-4">
+        // Direct Communication Channels
+      </div>
+      <h1 class="font-serif text-4xl md:text-6xl font-light text-[#192B24] tracking-tight leading-tight">
+        Connect With Our <br><span class="italic font-normal text-[#4F772D]">Pro Active Social Team</span>
+      </h1>
+      <div class="w-12 h-px bg-[#E9D8A6] mx-auto mt-6 mb-4"></div> 
+      <p class="text-sm md:text-base text-[#4A5D4E] font-light leading-relaxed">
+        Our dedicated support team is available to assist you with any inquiries,
+         feedback, or concerns.
+          We value your input and are committed to providing prompt and helpful responses. 
+          Reach out to us through the following channels, and we will ensure your experience with Rubies Organic is seamless and satisfying.
+      </p>
+    </div>
+
+    <!-- MAIN TWO-COLUMN LAYOUT CONTEXT -->
+    <div class="grid lg:grid-cols-12 gap-12 xl:gap-16 items-start">
+      
+      <!-- LEFT SIDEBAR: INTERACTIVE OPERATIONAL DASHBOARD -->
+      <div class="lg:col-span-5 space-y-6">
+        
+        <!-- Interactive Value Callout -->
+        <div class="p-8 rounded-2xl bg-[#233B31] text-white shadow-xl relative overflow-hidden group border border-white/5">
+          <div class="absolute inset-0 opacity-[0.03] bg-[linear-gradient(45deg,#fff_25%,transparent_25%,transparent_50%,#fff_50%,#fff_75%,transparent_75%,transparent)] [background-size:20px_20px]"></div>
+          <div class="relative z-10">
+            <span class="text-[10px] font-mono uppercase tracking-widest text-[#E9D8A6] block mb-2">// Customer Experience</span>
+            <h3 class="font-serif text-2xl font-light mb-3">Looking for a quick order resolution?</h3>
+            <p class="text-white/70 text-xs leading-relaxed mb-4 font-light">
+              Our support staff coordinates closely with our local extraction centers across Nigeria to answer questions about orders or processing method transparently.
+            </p>
+          </div>
+        </div>
+
+        <!-- Channel 1: Email Profile with Rubies Logo Insignia -->
+        <div class="p-6 rounded-2xl bg-white border border-[#1E2D24]/10 shadow-sm hover:shadow-md transition duration-300 flex items-start gap-5">
+          <!-- Logo frame housing the custom coconut design -->
+          <div class="w-12 h-12 rounded-xl bg-[#4F772D]/10 flex items-center justify-center shrink-0">
+            <svg class="w-7 h-7 stroke-[#4F772D]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="50" cy="55" rx="32" ry="34" stroke-width="5" stroke-linecap="round"/>
+              <ellipse cx="50" cy="32" rx="16" ry="6" fill="#4F772D" opacity="0.8"/>
+              <path d="M50 20 Q35 12 20 25 Q35 25 45 32" stroke-width="4" stroke-linecap="round"/>
+              <path d="M50 20 Q65 12 80 25 Q65 25 55 32" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="42" cy="50" r="2" fill="#4F772D"/>
+              <circle cx="50" cy="58" r="2" fill="#4F772D"/>
+              <circle cx="58" cy="50" r="2" fill="#4F772D"/>
+            </svg>
+          </div>
+          <div class="space-y-1">
+            <div class="text-[10px] uppercase tracking-widest font-mono font-bold text-[#4F772D]">Corporate Email Inbox</div>
+            <a href="mailto:rubiesorganic@gmail.com" id="contact-email-display" class="block font-serif text-lg font-medium text-[#192B24] hover:text-[#4F772D] transition-colors break-all">
+              rubiesorganic@gmail.com
+            </a>
+            <p class="text-xs text-[#4A5D4E]/70">For corporate logistics, bulk retail accounts, or press relations.</p>
+          </div>
+        </div>
+
+        <!-- Channel 2: WhatsApp / Phone Core Integration with Rubies Logo Insignia -->
+        <div class="p-6 rounded-2xl bg-white border border-[#1E2D24]/10 shadow-sm hover:shadow-md transition duration-300 flex items-start gap-5">
+          <div class="w-12 h-12 rounded-xl bg-[#E9D8A6]/30 flex items-center justify-center shrink-0">
+            <svg class="w-7 h-7 stroke-[#76532B]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="50" cy="55" rx="32" ry="34" stroke-width="5" stroke-linecap="round"/>
+              <ellipse cx="50" cy="32" rx="16" ry="6" fill="#76532B" opacity="0.8"/>
+              <path d="M50 20 Q35 12 20 25 Q35 25 45 32" stroke-width="4" stroke-linecap="round"/>
+              <path d="M50 20 Q65 12 80 25 Q65 25 55 32" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="42" cy="50" r="2" fill="#76532B"/>
+              <circle cx="50" cy="58" r="2" fill="#76532B"/>
+              <circle cx="58" cy="50" r="2" fill="#76532B"/>
+            </svg>
+          </div>
+          <div class="space-y-2 flex-1">
+            <div class="text-[10px] uppercase tracking-widest font-mono font-bold text-[#76532B]">Instant WhatsApp Concierge</div>
+            <a href="https://wa.me/2348099450337" target="_blank" id="contact-phone-display" class="inline-flex items-center gap-3 font-serif text-xl font-bold text-[#192B24] hover:text-[#4F772D] transition-colors group">
+              <span>+234 809 945 0337</span>
+              <div class="inline-flex items-center justify-center p-1 rounded-md bg-[#25D366]/10 text-[#25D366] group-hover:bg-[#25D366] group-hover:text-white transition-colors duration-300">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.454 5.709 1.455h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+              </div>
+            </a>
+            
+            <p class="text-xs text-[#4A5D4E]/70">Available Mon - Fri, 8AM - 6PM WAT for client services.</p>
+          </div> 
+        </div>
+
+        <!-- Channel 3: Headquarters Address with Rubies Logo Insignia -->
+        <div class="p-6 rounded-2xl bg-white border border-[#1E2D24]/10 shadow-sm hover:shadow-md transition duration-300 flex items-start gap-5">
+          <div class="w-12 h-12 rounded-xl bg-[#344E41]/10 flex items-center justify-center shrink-0">
+            <svg class="w-7 h-7 stroke-[#344E41]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="50" cy="55" rx="32" ry="34" stroke-width="5" stroke-linecap="round"/>
+              <ellipse cx="50" cy="32" rx="16" ry="6" fill="#344E41" opacity="0.8"/>
+              <path d="M50 20 Q35 12 20 25 Q35 25 45 32" stroke-width="4" stroke-linecap="round"/>
+              <path d="M50 20 Q65 12 80 25 Q65 25 55 32" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="42" cy="50" r="2" fill="#344E41"/>
+              <circle cx="50" cy="58" r="2" fill="#344E41"/>
+              <circle cx="58" cy="50" r="2" fill="#344E41"/>
+            </svg>
+          </div>
+          <div class="space-y-1">
+            <div class="text-[10px] uppercase tracking-widest font-mono font-bold text-[#344E41]">Distribution Hub</div>
+            <div id="contact-address-display" class="font-serif text-lg font-medium text-[#192B24]">
+              Lagos, Nigeria
+            </div>
+            <p class="text-xs text-[#4A5D4E]/70">Strategic extraction points and dispatch infrastructure across West Africa.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT SIDEBAR: HIGH-FIDELITY COMPASSIONATE INTAKE PORTAL CONTAINER WRAPPER -->
+      <div id="contact-portal-wrapper" class="lg:col-span-7 transition-all duration-500">
+        <form id="contact-form" class="bg-white rounded-3xl p-8 md:p-10 border border-[#1E2D24]/10 shadow-xl shadow-black/[0.02] space-y-6">
+          
+          <div class="border-b border-[#1E2D24]/10 pb-4 mb-2">
+            <h2 class="font-serif text-xl font-bold text-[#192B24]">Direct Correspondence Intake</h2>
+            <p class="text-xs text-[#4A5D4E]/70 font-sans mt-1">Complete this encrypted secure communication log to route straight to an account representative.</p>
+          </div>
+
+          <!-- Input Field 1: Full Name -->
+          <div class="space-y-2">
+            <label for="contact-name" class="block text-xs font-mono uppercase tracking-wider text-[#192B24] font-bold">Your Professional Title / Name</label> 
+            <div class="relative">
+              <input id="contact-name" required type="text" class="w-full px-4 py-3.5 rounded-xl border border-[#1E2D24]/10 bg-[#FAF8F5] focus:bg-white focus:ring-2 focus:ring-[#344E41]/20 focus:border-[#344E41] transition duration-200 outline-none font-sans text-sm text-[#192B24]" placeholder="Olamide Daniel">
+            </div>
+          </div>
+
+          <!-- Input Field 2: Email -->
+          <div class="space-y-2">
+            <label for="contact-email-input" class="block text-xs font-mono uppercase tracking-wider text-[#192B24] font-bold">Verified Email Address</label> 
+            <div class="relative">
+              <input id="contact-email-input" required type="email" class="w-full px-4 py-3.5 rounded-xl border border-[#1E2D24]/10 bg-[#FAF8F5] focus:bg-white focus:ring-2 focus:ring-[#344E41]/20 focus:border-[#344E41] transition duration-200 outline-none font-sans text-sm text-[#192B24]" placeholder="olamide@example.com">
+            </div>
+          </div>
+
+          <!-- Input Field 3: Text Message Context -->
+          <div class="space-y-2">
+            <label for="contact-message" class="block text-xs font-mono uppercase tracking-wider text-[#192B24] font-bold">Elaborate Your Core Inquiry</label> 
+            <div class="relative">
+              <textarea id="contact-message" required rows="5" class="w-full px-4 py-3.5 rounded-xl border border-[#1E2D24]/10 bg-[#FAF8F5] focus:bg-white focus:ring-2 focus:ring-[#344E41]/20 focus:border-[#344E41] transition duration-200 outline-none font-sans text-sm text-[#192B24] resize-none" placeholder="Please specify your requirements..."></textarea>
+            </div>
+          </div>
+
+          <!-- Action Processing Trigger Button -->
+          <div class="pt-2">
+            <button type="submit" id="contact-submit" class="w-full bg-[#344E41] hover:bg-[#233B31] text-white py-4 px-6 rounded-xl font-bold tracking-wide shadow-md transition duration-300 flex items-center justify-center gap-2 transform hover:-translate-y-0.5 group"> 
+              <span>Transmit Message</span> 
+              <!-- Rubies Logo inside submit button action stream -->
+              <svg class="w-4 h-4 stroke-white transition-transform group-hover:rotate-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="50" cy="55" rx="32" ry="34" stroke-width="8" stroke-linecap="round"/>
+                <ellipse cx="50" cy="32" rx="16" ry="6" fill="white"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Privacy / Integrity Safe Footer Badge -->
+          <div class="flex items-center gap-2 justify-center text-[11px] text-[#4A5D4E]/60 font-mono pt-2">
+            <svg class="w-3.5 h-3.5 text-[#4F772D]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            <span>End-to-End Secure Privacy Protocols Active</span>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AUTOMATIC CORRESPONDENCE FORWARDING & RESPONDER ENGINE -->
+    <!-- ========== REGISTER PAGE ========== -->
+  <section id="page-register" class="page bg-[#FAF8F5] text-[#2C3E2B] font-sans min-h-screen">
+  <div class="min-h-screen grid lg:grid-cols-12 overflow-hidden">
+    
+    <!-- LEFT SIDEBAR: EDITORIAL BRAND ANCHOR -->
+    <div class="lg:col-span-5 bg-gradient-to-br from-[#2D4A3E] via-[#233B31] to-[#192B24] p-12 flex flex-col justify-between relative hidden lg:flex">
+      <!-- Ambient lattice layer -->
+      <div class="absolute inset-0 opacity-5 mix-blend-overlay pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
+      
+      <!-- Top Brand Stamp -->
+      <div class="relative z-10 flex items-center gap-3">
+        <svg class="w-8 h-8 stroke-[#E9D8A6]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="50" cy="55" rx="32" ry="34" stroke-width="6" stroke-linecap="round"/>
+          <ellipse cx="50" cy="32" rx="16" ry="6" fill="#E9D8A6" opacity="0.8"/>
+          <path d="M50 20 Q35 12 20 25 Q35 25 45 32" stroke-width="4" stroke-linecap="round"/>
+          <path d="M50 20 Q65 12 80 25 Q65 25 55 32" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <span class="font-mono text-xs text-white uppercase tracking-[0.3em]">Rubies Organic</span>
+      </div>
+
+      <!-- Core Narrative Block -->
+      <div class="relative z-10 max-w-sm my-auto text-white space-y-6">
+        <h2 class="font-serif text-4xl font-light leading-tight tracking-tight">
+          Join the <br><span class="italic text-[#E9D8A6]">Rubies Family</span>
+        </h2>
+        <p class="text-white/70 text-sm leading-relaxed font-light">
+          Sign up to synchronize your wellness routine with pure earth-to-table access. Unlock exclusive small-batch recipes, early allocations of limited product harvests, and a **10% welcome discount** sent straight to your inbox.
+        </p>
+        
+        <!-- Premium Feature Vectors -->
+        <ul class="space-y-4 text-xs font-mono text-white/80 border-t border-white/10 pt-6">
+          <li class="flex items-center gap-3">
+            <i data-lucide="check-circle" class="w-4 h-4 text-[#E9D8A6]"></i> 
+            EXCLUSIVE MEMBER DISCOUNTS
+          </li>
+          <li class="flex items-center gap-3">
+            <i data-lucide="check-circle" class="w-4 h-4 text-[#E9D8A6]"></i> 
+            EARLY LAUNCH ALLOCATIONS
+          </li>
+          <li class="flex items-center gap-3">
+            <i data-lucide="check-circle" class="w-4 h-4 text-[#E9D8A6]"></i> 
+            BOTANICAL RECIPES & WELLNESS TIPS
+          </li>
+        </ul>
+      </div>
+
+      <!-- Footer Estate Stamp -->
+      <div class="relative z-10 text-[10px] font-mono text-white/40 tracking-widest">
+        © RUBIES ORGANIC.CO  • NIGERIA EST. 2013
+      </div>
+    </div>
+
+    <!-- RIGHT SIDEBAR: HIGH-FIDELITY INTAKE PORTAL & INTERACTIVE RESPONSE TARGET -->
+    <div class="lg:col-span-7 flex items-center justify-center p-6 md:p-12 relative">
+      <!-- Decorative vector backdrop -->
+      <div class="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#1e2d24_1px,transparent_1px)] [background-size:24px_24px]"></div>
+      
+      <!-- Interactive Container Wrapper for dynamic swap transitions -->
+      <div id="register-interface-wrapper" class="w-full max-w-md bg-white rounded-3xl p-8 md:p-10 border border-[#1E2D24]/10 shadow-xl transition-all duration-500">
+        
+        <!-- ACTIVE ACCOUNT CREATION FORM STATE -->
+        <form id="register-form" class="space-y-6">
+          <div class="text-center mb-6">
+            <!-- Mobile Brand Logo Display fallback -->
+            <div class="lg:hidden flex justify-center mb-4">
+              <div class="w-12 h-12 rounded-full bg-[#4F772D]/10 flex items-center justify-center">
+                <svg class="w-8 h-8 stroke-[#4F772D]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <ellipse cx="50" cy="55" rx="32" ry="34" stroke-width="6" stroke-linecap="round"/>
+                  <ellipse cx="50" cy="32" rx="16" ry="6" fill="#4F772D" opacity="0.8"/>
+                </svg>
+              </div>
+            </div>
+            <h1 class="font-serif text-3xl font-bold text-[#192B24] tracking-tight">Create Account</h1>
+            <p class="text-xs text-[#4A5D4E]/80 mt-1">Start your clean coconut wellness journey today</p>
+          </div>
+
+          <!-- Input Block 1: Full Name -->
+          <div class="space-y-2">
+            <label for="reg-name" class="block text-xs font-mono uppercase tracking-wider text-[#192B24] font-bold">Full Name</label>
+            <input id="reg-name" required type="text" placeholder="Olamide Daniel" class="w-full px-4 py-3.5 rounded-xl border border-[#1E2D24]/10 bg-[#FAF8F5] focus:bg-white focus:ring-2 focus:ring-[#344E41]/20 focus:border-[#344E41] transition duration-200 outline-none font-sans text-sm text-[#192B24]">
+          </div>
+
+          <!-- Input Block 2: Email -->
+          <div class="space-y-2">
+            <label for="reg-email" class="block text-xs font-mono uppercase tracking-wider text-[#192B24] font-bold">Email Address</label> 
+            <input id="reg-email" required type="email" placeholder="olamide@example.com" class="w-full px-4 py-3.5 rounded-xl border border-[#1E2D24]/10 bg-[#FAF8F5] focus:bg-white focus:ring-2 focus:ring-[#344E41]/20 focus:border-[#344E41] transition duration-200 outline-none font-sans text-sm text-[#192B24]">
+          </div>
+
+          <!-- Input Block 3: Phone Number -->
+          <div class="space-y-2">
+            <label for="reg-phone" class="block text-xs font-mono uppercase tracking-wider text-[#192B24] font-bold">Phone Number</label> 
+            <input id="reg-phone" required type="tel" placeholder="+234 809 945 0337" class="w-full px-4 py-3.5 rounded-xl border border-[#1E2D24]/10 bg-[#FAF8F5] focus:bg-white focus:ring-2 focus:ring-[#344E41]/20 focus:border-[#344E41] transition duration-200 outline-none font-sans text-sm text-[#192B24]">
+          </div>
+
+          <!-- Action Button Processing Link -->
+          <div class="pt-2">
+            <button type="submit" id="register-submit" class="w-full bg-[#344E41] hover:bg-[#233B31] text-white py-4 px-6 rounded-xl font-bold tracking-wide shadow-md transition duration-300 flex items-center justify-center gap-3 transform hover:-translate-y-0.5 group">
+              <span>Create Account</span>
+              <svg class="w-4 h-4 stroke-white transition-transform group-hover:rotate-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="50" cy="55" rx="32" ry="34" stroke-width="8" stroke-linecap="round"/>
+                <ellipse cx="50" cy="32" rx="16" ry="6" fill="white"/>
+              </svg>
+            </button>
+          </div>
+
+          <p class="text-[11px] text-center text-[#4A5D4E]/70 leading-relaxed font-sans">
+            By signing up you explicitly agree to our verification terms, privacy parameters, and our ancestral organic purity promise 🥥
+          </p>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPACT AUTOMATIC LOCALSTORAGE COMMIT ENGINE -->
+
+   </main>
+   <!-- ========== FOOTER ========== -->
+  <footer class="bg-[#2D1810] text-white/70 py-20 relative overflow-hidden mt-auto border-t border-[#A8323A]/10 font-sans">
+  <!-- Organic Background Geometric Accent Overlay -->
+  <div class="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#C9954D_1px,transparent_1px)] [background-size:32px_32px]"></div>
+  
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+       
+      <!-- COLUMN 1: EDITORIAL IDENTITY & META READOUT (Asymmetrical Weight) --> 
+      <div class="lg:col-span-5 space-y-8">
+        <div class="flex items-center gap-4">
+          <!-- Perfectly Calibrated Continuous Gradient Badge Ring -->
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center p-0.5 relative group overflow-hidden shrink-0 shadow-lg shadow-black/20" style="background: linear-gradient(135deg, #A8323A 0%, #C9954D 50%, #6B4423 100%);">
+            <img src="rubiesorganic.webp" class="w-full h-full object-cover rounded-[14px]" alt="Rubies Organic Logo">
+          </div>
+          <div>
+            <div id="footer-brand" class="font-serif text-2xl font-bold tracking-tight text-white leading-none mb-1">
+              Rubies Organic
+            </div>
+            <div class="text-xs font-mono tracking-[0.25em] uppercase text-[#C9954D] font-semibold">
+              rubiesorganic.co
+              </div>
+          </div>
+        </div>
+
+        <p class="text-sm md:text-base text-white/80 font-light leading-relaxed max-w-md">
+          Pioneering premium small-batch agricultural extraction across West Africa.
+           Bringing you the finest virgin coconut matrices from Nigeria—pure, untamed, and crafted with conscious dedication.
+        </p>
+
+        <!-- Live Local Time / Origin Badge Matrix (Adds High-End Operational Feel) -->
+        <div class="inline-flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/5 text-xs text-white/90">
+          <span class="w-2 h-2 rounded-full bg-[#C9954D] animate-pulse"></span>
+          <span class="font-mono text-white/60 uppercase tracking-wider">Lagos Hub:</span>
+          <span id="footer-live-time" class="font-mono font-bold text-white">11:56 PM WAT</span>
+        </div>
+      </div>
+
+      <!-- COLUMN 2: CUSTOM ABSTRACT NEWSLETTER EXPANSION BLOCK -->
+      <div class="lg:col-span-3 lg:pt-2 space-y-4">
+        <h4 class="text-xs tracking-[0.3em] font-mono font-bold text-[#C9954D] uppercase">// Dispatch Circular</h4>
+        <p class="text-xs font-light text-white/60 leading-relaxed">
+          Access private seasonal harvest drops, raw production logs, and direct trade updates.
+        </p>
+        <div class="relative flex items-center mt-2">
+          <input type="email" placeholder="Enter your email..." class="w-full pl-4 pr-10 py-3 bg-white/[0.04] border border-white/10 rounded-xl text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#C9954D] focus:ring-1 focus:ring-[#C9954D] transition duration-300">
+          <button class="absolute right-2 p-1.5 rounded-lg text-white/60 hover:text-[#C9954D] transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- COLUMN 3: NAV LINKS — MINIMAL COMPACT SPLIT GRID -->
+      <div class="lg:col-span-4 lg:pt-2 grid grid-cols-2 gap-8">
+        <div>
+          <h4 class="text-xs tracking-[0.3em] font-mono font-bold text-[#C9954D] uppercase mb-5">// Curation</h4>
+          <ul class="space-y-3.5 text-sm font-light">
+            <li><a href="#" onclick="navigateTo('shop'); return false;" class="text-white/70 hover:text-white hover:translate-x-1 transition flex items-center gap-1.5 group"><span class="opacity-0 group-hover:opacity-100 transition-all text-[#C9954D] text-xs">→</span> All Products</a></li>
+            <li><a href="#" onclick="navigateTo('shop'); return false;" class="text-white/70 hover:text-white hover:translate-x-1 transition flex items-center gap-1.5 group"><span class="opacity-0 group-hover:opacity-100 transition-all text-[#C9954D] text-xs">→</span> Coconut Oils</a></li>
+            <li><a href="#" onclick="navigateTo('shop'); return false;" class="text-white/70 hover:text-white hover:translate-x-1 transition flex items-center gap-1.5 group"><span class="opacity-0 group-hover:opacity-100 transition-all text-[#C9954D] text-xs">→</span> Foods</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xs tracking-[0.3em] font-mono font-bold text-[#C9954D] uppercase mb-5">// Operations</h4>
+          <ul class="space-y-3.5 text-sm font-light">
+            <li><a href="#" onclick="navigateTo('about'); return false;" class="text-white/70 hover:text-white hover:translate-x-1 transition flex items-center gap-1.5 group"><span class="opacity-0 group-hover:opacity-100 transition-all text-[#C9954D] text-xs">→</span> About Us</a></li>
+            <li><a href="#" onclick="navigateTo('contact'); return false;" class="text-white/70 hover:text-white hover:translate-x-1 transition flex items-center gap-1.5 group"><span class="opacity-0 group-hover:opacity-100 transition-all text-[#C9954D] text-xs">→</span> Contact</a></li>
+            <li><a href="#" onclick="navigateTo('register'); return false;" class="text-white/70 hover:text-white hover:translate-x-1 transition flex items-center gap-1.5 group"><span class="opacity-0 group-hover:opacity-100 transition-all text-[#C9954D] text-xs">→</span> Register Ledger</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+<!-- CLEAN EDITORIAL HORIZON LINE & LEGAL NOTICES -->
+    <div class="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono tracking-wider text-white/40">
+      <div class="flex items-center gap-1">
+        <span>© 2026 Rubies Organic. Built with Integrity.</span>
+      </div>
+      <div class="flex gap-6 text-white/30">
+        <a href="#" class="hover:text-[#C9954D] transition-colors">Extraction Protocols</a>
+        <a href="#" class="hover:text-[#C9954D] transition-colors">Privacy Infrastructure</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast container -->
+<div id="toast-container" class="fixed bottom-6 right-6 z-50 space-y-2"></div>
+<!-- Live Time Sync Engine for the Lagos Distribution Hub -->
+ <script src="logistics.js"></script>
+ <script src="contact.js"></script>
+<script src="javascript.js"></script>
+<script src="rubies-backend/server.js"></script>
+<script src="script.js"></script>  
+</body>
+ </html>
