@@ -5,6 +5,7 @@
   "main": "contact.js",
   "scripts": {
     "start": "node rubies-backend/server.js",
+    "worker": "node rubies-backend/worker.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,7 +16,9 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "nodemailer": "^8.0.11"
+    "nodemailer": "^8.0.11",
+    "bull": "^4.10.0",
+    "ioredis": "^4.28.5"
   },
   "devDependencies": {}
 }
