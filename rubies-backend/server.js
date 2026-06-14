@@ -11,6 +11,7 @@ app.use(cors({ origin: '*' })); // Allows front-end connections from any domain 
 app.use(express.json());
 
 const simulate = (process.env.SIMULATE_EMAIL || 'false').toLowerCase() === 'true';
+console.log('Environment SIMULATE_EMAIL=', process.env.SIMULATE_EMAIL, '=> simulate=', simulate);
 
 let transporter = null;
 if (!simulate) {
