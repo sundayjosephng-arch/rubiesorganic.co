@@ -61,7 +61,6 @@ app.post('/api/orders', async (req, res) => {
     return res.status(500).json({ success: false, message: 'Failed to queue order notifications.' });
   }
 });
-});
 
 app.listen(PORT, () => {
   console.log(` Rubies Support System running on port ${PORT}`);

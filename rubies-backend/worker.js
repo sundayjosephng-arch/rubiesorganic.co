@@ -5,22 +5,29 @@ require('dotenv').config();
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const emailQueue = new Queue('emailQueue', REDIS_URL);
 
-// Configure mailer (same as server)
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.COMPANY_EMAIL,
-    pass: process.env.EMAIL_APP_PASSWORD
-  },
-  pool: true,
-  maxConnections: 5,
-  maxMessages: 100
-});
+const simulate = (process.env.SIMULATE_EMAIL || 'false').toLowerCase() === 'true';
 
-transporter.verify((err) => {
-  if (err) console.error('Worker mailer verification failed:', err.message || err);
-  else console.log('Worker mailer ready');
-});
+let transporter = null;
+if (!simulate) {
+  // Configure mailer (same as server)
+  transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.COMPANY_EMAIL,
+      pass: process.env.EMAIL_APP_PASSWORD
+    },
+    pool: true,
+    maxConnections: 5,
+    maxMessages: 100
+  });
+
+  transporter.verify((err) => {
+    if (err) console.error('Worker mailer verification failed:', err.message || err);
+    else console.log('Worker mailer ready');
+  });
+} else {
+  console.log('Worker running in SIMULATION mode — emails will be written to rubies-backend/fake-emails');
+}
 
 // Process jobs with concurrency
 emailQueue.process(5, async (job) => {
@@ -64,6 +71,27 @@ emailQueue.process(5, async (job) => {
       <div style="text-align: center; margin-top: 30px; font-size: 11px; color: rgba(30,45,36,0.5);">&copy; 2026 Rubies Organic Essentials. All rights reserved.</div>
     </div>
   `;
+
+  const fs = require('fs');
+  const path = require('path');
+
+  if (simulate) {
+    const outDir = path.join(__dirname, 'fake-emails');
+    if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+
+    const internalPath = path.join(outDir, `internal-${jobId}.html`);
+    const customerPath = path.join(outDir, `customer-${jobId}.html`);
+
+    try {
+      fs.writeFileSync(internalPath, internalMailOptions.html, 'utf8');
+      fs.writeFileSync(customerPath, customerHtml, 'utf8');
+      console.log(`Simulated emails written for job ${jobId}:`, internalPath, customerPath);
+      return;
+    } catch (err) {
+      console.error(`Failed to write simulated emails for job ${jobId}:`, err.message || err);
+      throw err;
+    }
+  }
 
   try {
     await transporter.sendMail(internalMailOptions);
