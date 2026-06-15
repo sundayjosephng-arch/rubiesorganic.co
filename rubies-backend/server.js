@@ -46,6 +46,7 @@ const emailQueue = simulate ? null : new Queue('emailQueue', process.env.REDIS_U
 // Primary Endpoint to process orders (now enqueues email jobs)
 app.post('/api/orders', async (req, res) => {
   const { productName, clientName, clientEmail, sizeQuantity, logisticsInstructions } = req.body;
+  console.log('Received order request:', { productName, clientName, clientEmail, sizeQuantity, logisticsInstructions });
 
   // Simple validation check
   if (!productName || !clientName || !clientEmail || !sizeQuantity) {
@@ -62,6 +63,7 @@ app.post('/api/orders', async (req, res) => {
   };
   // If SIMULATE_EMAIL is enabled, write simulated emails immediately and don't require Redis/worker.
   const simulate = (process.env.SIMULATE_EMAIL || 'false').toLowerCase() === 'true';
+  console.log('SIMULATE_EMAIL inside request:', simulate);
   if (simulate) {
     try {
       const fs = require('fs');
