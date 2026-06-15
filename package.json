@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node rubies-backend/server.js",
     "worker": "node rubies-backend/worker.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:order": "node scripts/test_order.js"
   },
   "keywords": [],
   "author": "",

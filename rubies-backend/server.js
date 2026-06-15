@@ -61,8 +61,7 @@ app.post('/api/orders', async (req, res) => {
     logisticsInstructions: logisticsInstructions || null,
     receivedAt: Date.now()
   };
-  // If SIMULATE_EMAIL is enabled, write simulated emails immediately and don't require Redis/worker.
-  const simulate = (process.env.SIMULATE_EMAIL || 'false').toLowerCase() === 'true';
+  // If SIMULATE_EMAIL is enabled (module-level `simulate`), write simulated emails immediately and don't require Redis/worker.
   console.log('SIMULATE_EMAIL inside request:', simulate);
   if (simulate) {
     try {
@@ -83,7 +82,7 @@ app.post('/api/orders', async (req, res) => {
 
       return res.status(202).json({ success: true, jobId, message: 'Simulated emails written.' });
     } catch (err) {
-      console.error('Failed to write simulated emails:', err);
+      console.error('Failed to write simulated emails:', err && err.stack ? err.stack : err);
       return res.status(500).json({ success: false, message: 'Failed to write simulated emails.' });
     }
   }
@@ -92,7 +91,7 @@ app.post('/api/orders', async (req, res) => {
     const job = await emailQueue.add(jobPayload, { attempts: 3, backoff: 5000 });
     return res.status(202).json({ success: true, jobId: job.id, message: 'Order queued for notification.' });
   } catch (err) {
-    console.error('Failed to enqueue email job:', err);
+    console.error('Failed to enqueue email job:', err && err.stack ? err.stack : err);
     return res.status(500).json({ success: false, message: 'Failed to queue order notifications.' });
   }
 });
