@@ -2,6 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 require('dotenv').config();
+const { sendOrderNotifications } = require('./notifications');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -59,7 +60,8 @@ app.post('/api/orders', async (req, res) => {
     clientEmail,
     sizeQuantity,
     logisticsInstructions: logisticsInstructions || null,
-    receivedAt: Date.now()
+    receivedAt: Date.now(),
+    orderId: `order-${Date.now()}`
   };
   // If SIMULATE_EMAIL is enabled (module-level `simulate`), write simulated emails immediately and don't require Redis/worker.
   console.log('SIMULATE_EMAIL inside request:', simulate);
@@ -80,6 +82,11 @@ app.post('/api/orders', async (req, res) => {
       fs.writeFileSync(internalPath, internalHtml, 'utf8');
       fs.writeFileSync(customerPath, customerHtml, 'utf8');
 
+      await sendOrderNotifications({
+        ...jobPayload,
+        orderId: jobId
+      }, { dryRun: true });
+
       return res.status(202).json({ success: true, jobId, message: 'Simulated emails written.' });
     } catch (err) {
       console.error('Failed to write simulated emails:', err && err.stack ? err.stack : err);
@@ -89,6 +96,9 @@ app.post('/api/orders', async (req, res) => {
 
   try {
     const job = await emailQueue.add(jobPayload, { attempts: 3, backoff: 5000 });
+    sendOrderNotifications(jobPayload).catch((err) => {
+      console.error('Failed to send order notifications after queueing:', err && err.stack ? err.stack : err);
+    });
     return res.status(202).json({ success: true, jobId: job.id, message: 'Order queued for notification.' });
   } catch (err) {
     console.error('Failed to enqueue email job:', err && err.stack ? err.stack : err);

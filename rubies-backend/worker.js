@@ -1,6 +1,7 @@
 const Queue = require('bull');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
+const { sendOrderNotifications } = require('./notifications');
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const emailQueue = new Queue('emailQueue', REDIS_URL);
@@ -74,6 +75,20 @@ emailQueue.process(5, async (job) => {
 
   const fs = require('fs');
   const path = require('path');
+
+  try {
+    await sendOrderNotifications({
+      productName,
+      clientName,
+      clientEmail,
+      sizeQuantity,
+      logisticsInstructions,
+      receivedAt,
+      orderId: jobId
+    });
+  } catch (err) {
+    console.error(`Worker failed to send order notifications for job ${jobId}:`, err.message || err);
+  }
 
   if (simulate) {
     const outDir = path.join(__dirname, 'fake-emails');
