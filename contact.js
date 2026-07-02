@@ -12,8 +12,23 @@
       return;
     }
 
+    const appreciationNote = document.createElement('p');
+    appreciationNote.className = 'text-sm text-[#4A5D4E] leading-relaxed text-center font-light';
+    appreciationNote.innerHTML = 'Thank you for reaching out. We truly appreciate your message and will get back to you soon.';
+    submitButton.parentElement.insertBefore(appreciationNote, submitButton);
+
     submitButton.disabled = true;
     submitButton.innerHTML = '<span>Sending...</span>';
+
+    let statusMessage = document.getElementById('contact-status-message');
+    if (!statusMessage) {
+      statusMessage = document.createElement('p');
+      statusMessage.id = 'contact-status-message';
+      statusMessage.className = 'text-sm text-[#4F772D] leading-relaxed max-w-sm mx-auto font-light mt-3';
+      submitButton.parentNode.appendChild(statusMessage);
+    }
+    statusMessage.textContent = 'Thank you for reaching out. We truly appreciate your message and will get back to you soon.';
+
     portalWrapper.classList.add('opacity-0', 'transform', 'scale-95');
 
     try {
@@ -57,6 +72,9 @@
 
             <p class="text-sm text-[#4A5D4E] leading-relaxed max-w-sm mx-auto font-light">
               Your inquiry has been delivered directly to our team at rubiesorganic@gmail.com.
+            </p>
+            <p class="text-sm text-[#4A5D4E] leading-relaxed max-w-sm mx-auto font-light">
+              Thank you for reaching out. We truly appreciate your message and will get back to you shortly with a heartfelt response.
             </p>
 
             <div class="p-5 rounded-2xl bg-[#FAF8F5] border border-[#1E2D24]/5 inline-block w-full">
