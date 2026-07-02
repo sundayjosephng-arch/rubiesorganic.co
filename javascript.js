@@ -544,35 +544,6 @@ function updateCartBadge() {
 }
 
 // ======= FORMS =======
-document.getElementById('contact-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = document.getElementById('contact-submit');
-  btn.disabled = true; btn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Sending...';
-  lucide.createIcons();
-  
-  if (cart.length >= 999) { showToast('Submission limit reached', 'error'); btn.disabled = false; return; }
-  
-  const result = await window.dataSdk.create({
-    type: 'contact_message',
-    product_id: '', product_name: '', price: 0, quantity: 0,
-    name: document.getElementById('contact-name').value,
-    email: document.getElementById('contact-email-input').value,
-    phone: '',
-    message: document.getElementById('contact-message').value,
-    createdAt: new Date().toISOString()
-  });
-  
-  btn.disabled = false;
-  btn.innerHTML = '<span>Send Message</span><i data-lucide="send" class="w-4 h-4"></i>';
-  lucide.createIcons();
-  
-  if (result.isOk) {
-    e.target.reset();
-    showToast('Message sent! We\'ll be in touch soon.', 'success');
-  } else {
-    showToast('Could not send message. Try again.', 'error');
-  }
-});
 
 document.getElementById('register-form').addEventListener('submit', async (e) => {
   e.preventDefault();

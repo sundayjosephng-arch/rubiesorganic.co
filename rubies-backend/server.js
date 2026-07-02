@@ -45,6 +45,58 @@ const Queue = require('bull');
 const emailQueue = simulate ? null : new Queue('emailQueue', process.env.REDIS_URL || 'redis://127.0.0.1:6379');
 
 // Primary Endpoint to process orders (now enqueues email jobs)
+app.post('/api/contact', async (req, res) => {
+  const { name, email, message } = req.body;
+  console.log('Received contact request:', { name, email, message: message ? message.slice(0, 120) : null });
+
+  if (!name || !email || !message) {
+    return res.status(400).json({ success: false, message: 'Missing required contact details.' });
+  }
+
+  const subject = `New Inquiry from ${name}`;
+  const html = `
+    <div style="font-family: Arial, sans-serif; padding: 24px; color: #1E2D24;">
+      <h2 style="margin-bottom: 12px;">New Inquiry Received</h2>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Message:</strong></p>
+      <p>${message.replace(/\n/g, '<br/>')}</p>
+    </div>
+  `;
+
+  if (simulate) {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const outDir = path.join(__dirname, 'fake-emails');
+      if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+      const filePath = path.join(outDir, `contact-${Date.now()}.html`);
+      fs.writeFileSync(filePath, html, 'utf8');
+      return res.status(202).json({ success: true, message: 'Inquiry captured in simulation mode.' });
+    } catch (err) {
+      console.error('Failed to write simulated contact email:', err && err.stack ? err.stack : err);
+      return res.status(500).json({ success: false, message: 'Failed to save inquiry.' });
+    }
+  }
+
+  if (!transporter) {
+    return res.status(500).json({ success: false, message: 'Email transport is not configured.' });
+  }
+
+  try {
+    await transporter.sendMail({
+      from: `"Rubies Organic Contact" <${process.env.COMPANY_EMAIL}>`,
+      to: process.env.CONTACT_EMAIL || process.env.COMPANY_EMAIL || 'rubiesorganic@gmail.com',
+      subject,
+      html
+    });
+    return res.status(200).json({ success: true, message: 'Inquiry sent successfully.' });
+  } catch (err) {
+    console.error('Failed to send contact inquiry:', err && err.stack ? err.stack : err);
+    return res.status(500).json({ success: false, message: 'Failed to send inquiry.' });
+  }
+});
+
 app.post('/api/orders', async (req, res) => {
   const { productName, clientName, clientEmail, sizeQuantity, logisticsInstructions } = req.body;
   console.log('Received order request:', { productName, clientName, clientEmail, sizeQuantity, logisticsInstructions });
